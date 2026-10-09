@@ -22,11 +22,6 @@ file; provide them through a secret manager or another protected source.
 Set Vault authentication through the standard Vault environment or agent
 configuration, for example `VAULT_TOKEN` where appropriate. Then run:
 
-```shell
-terraform init
-terraform plan
-terraform apply
-```
 
 ## Module behavior
 

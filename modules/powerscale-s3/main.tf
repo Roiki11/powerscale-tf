@@ -23,7 +23,6 @@ resource "powerscale_user" "s3_user" {
 
   name           = each.key
   query_zone     = var.zone
-  uid            = each.value.uid
   email          = each.value.email
   password       = lookup(var.user_passwords, each.key, null)
   home_directory = "/ifs/data/${each.key}"

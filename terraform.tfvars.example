@@ -1,0 +1,46 @@
+powerscale_endpoint = "https://powerscale.example.com"
+powerscale_username = "terraform"
+powerscale_password = "replace-with-a-secret-from-your-secret-manager"
+vault_address       = "https://vault.example.com"
+
+zone              = "s3-zone"
+vault_mount       = "secret"
+vault_path_prefix = "powerscale/s3"
+
+users = {
+  analytics = {
+    buckets = {
+      reports = {
+        path        = "/ifs/s3/analytics/reports"
+        create_path = true
+        description = "Analytics reports"
+        acl = [
+          {
+            grantee = {
+              name = "analytics"
+              type = "user"
+            }
+            permission = "FULL_CONTROL"
+          }
+        ]
+      }
+    }
+  }
+
+  backup = {
+    buckets = {
+      archive = {
+        path = "/ifs/s3/backup/archive"
+      }
+    }
+    # Grace period for the old key after rotation, in minutes.
+    existing_key_expiry_time = 60
+  }
+}
+
+# Optional local PowerScale user passwords, keyed by username.
+# Supply actual passwords through a secret manager or another protected source;
+# do not commit them in this file.
+# user_passwords = {
+#   analytics = "replace-me"
+# }

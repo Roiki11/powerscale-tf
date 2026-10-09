@@ -13,53 +13,11 @@ that configures the providers and calls the child module.
 
 ## Configure and apply the example
 
-Configure the required root-module variables using a protected `.tfvars` file,
-environment variables, or your automation platform. The root `.gitignore`
-excludes `*.tfvars` files.
-
-Example `terraform.tfvars`:
-
-```terraform
-powerscale_endpoint = "https://powerscale.example.com"
-powerscale_username = "terraform"
-powerscale_password = "use-a-secret-manager"
-vault_address       = "https://vault.example.com"
-zone                = "s3-zone"
-vault_mount         = "secret"
-vault_path_prefix   = "powerscale/s3"
-
-users = {
-  analytics = {
-    uid = 12001
-    buckets = {
-      reports = {
-        path        = "/ifs/s3/analytics/reports"
-        create_path = true
-        description = "Analytics reports"
-        acl = [
-          {
-            grantee = {
-              name = "analytics"
-              type = "user"
-            }
-            permission = "FULL_CONTROL"
-          }
-        ]
-      }
-    }
-  }
-
-  backup = {
-    buckets = {
-      archive = {
-        path = "/ifs/s3/backup/archive"
-      }
-    }
-    # Grace period for the old key after rotation, in minutes.
-    existing_key_expiry_time = 60
-  }
-}
-```
+Copy [`terraform.tfvars.example`](./terraform.tfvars.example) to
+`terraform.tfvars` and replace the placeholder values with your environment's
+settings. The root `.gitignore` excludes `*.tfvars` files to help prevent
+credentials from being committed. Do not put real passwords in the example
+file; provide them through a secret manager or another protected source.
 
 Set Vault authentication through the standard Vault environment or agent
 configuration, for example `VAULT_TOKEN` where appropriate. Then run:

@@ -16,12 +16,11 @@ variable "users" {
     secret key remains valid after a key update; it does not expire the new key.
   EOT
   type = map(object({
-    uid   = optional(number)
     email = optional(string)
     buckets = optional(map(object({
-      path        = string
-      create_path = optional(bool, false)
-      description = optional(string, "")
+      path        = mandatory(string, "", "Bucket path is required.")
+      create_path = mandatory(bool, true)
+      description = mandatory(string, "", "Bucket description is required." )
       acl = optional(list(object({
         grantee = object({
           name = string

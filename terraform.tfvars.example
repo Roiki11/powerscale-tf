@@ -23,6 +23,17 @@ users = {
             permission = "FULL_CONTROL"
           }
         ]
+        access_keys = {
+          reports_read = {
+            username   = "analytics-reports-read"
+            permission = "READ"
+          }
+          reports_write = {
+            username                 = "analytics-reports-write"
+            permission               = "WRITE"
+            existing_key_expiry_time = 60
+          }
+        }
       }
     }
   }
@@ -30,7 +41,8 @@ users = {
   backup = {
     buckets = {
       archive = {
-        path = "/ifs/s3/backup/archive"
+        path        = "/ifs/s3/backup/archive"
+        description = "Backup archive"
       }
     }
     # Grace period for the old key after rotation, in minutes.
